@@ -1,0 +1,67 @@
+---
+import "../styles/styles.css";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Advice Generator</title>
+    </head>
+    <body>
+        <div class="content">
+            <div class="card">
+                <p id="advice-number">ADVICE # <span id="number">000</span></p>
+                <div id="quote">
+                    <span id="quote-body"></span>
+                    <span id="loading-quote">Loading...</span>
+                </div>
+                <div id="divider"></div>
+
+                <div id="button">
+                    <div id="randomizer">
+                        <img src="/icon-dice.svg" alt="dice icon for randomizer" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const randomizer = document.getElementById("randomizer");
+            const loading = document.getElementById("loading-quote");
+            const quote = document.getElementById("quote-body");
+            const number = document.getElementById("number");
+
+            loading.style.display = "none";
+            quote.style.display = "none";
+
+            const fetchData = () => {
+                loading.style.display = "block";
+                quote.style.display = "none";
+
+                loading.innerHTML = "Loading...";
+
+                fetch("https://api.adviceslip.com/advice")
+                    .then((res) => res.json())
+                    .then((data) => {
+                        loading.style.display = "none";
+                        quote.style.display = "block";
+
+                        number.innerHTML = data.slip.id;
+                        quote.innerHTML = `&#8220;${data.slip.advice}&#8221;`;
+                    })
+                    .catch((err) => {
+                        loading.innerHTML = "Network Error. Retry.";
+                        console.log(err);
+                    });
+            };
+
+            fetchData();
+
+            randomizer.addEventListener("click", () => {
+                fetchData();
+            });
+        </script>
+    </body>
+</html>
