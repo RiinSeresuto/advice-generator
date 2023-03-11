@@ -28,8 +28,8 @@ Users should be able to:
 
 ### Links
 
--   [Solution](https://your-solution-url.com)
--   [Live Site](https://your-live-site-url.com)
+-   [Solution](https://github.com/RiinSeresuto/advice-generator)
+-   [Live Site](https://astro-advice-generator.vercel.app/)
 
 ## My process
 
